@@ -14,6 +14,7 @@ exports.getHome = async(req, res, next) => {
       LoggeSuccessfully : req.flash('SuccessLogin')[0],
       isUser : req.session.userId,
       posts : users,
+      image : req.session.userImage
      });
   } catch (err) {
     console.error(err);
