@@ -61,6 +61,7 @@ const deletePostById = (req,res) => {
         image : req.file ? '/' + req.file.filename : '',  
       })
       .then((result) => {
+        req.session.userImage = result.image
         res.redirect('/portfolio')
       })
       .catch(err => {
