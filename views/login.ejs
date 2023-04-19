@@ -1,0 +1,32 @@
+<%- include('./parts/header.ejs') %>
+<%- include('./parts/navbar.ejs') %>
+
+<div class="signup" style="min-height: 100vh;display: flex;align-items: center;justify-content: center;">
+    <div class="container">
+      <% if (LoginEmailValidation) {%>
+        <div class="alert alert-danger"><%= LoginEmailValidation %></div>
+    <%} %>
+        <div class="card border-0">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="/person-using-currency-exchange-app.png" style="height: 100%;max-width: 100%;" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                    <form action="/login" method="POST">
+                        <label class="mb-2" for="email">Email</label>
+                        <input name="email" required  class="form-control mb-3" type="email" id="email" placeholder="Enter your email">
+                        <label class="mb-2" for="password">Password</label>
+                        <input name="password" required  class="form-control mb-3" type="password" id="password" placeholder="Enter your password">
+                        <input  class="mt-3 btn-submit" type="submit" value="Login">
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+<%- include('./parts/footer.ejs') %>
+</body>
+</html>

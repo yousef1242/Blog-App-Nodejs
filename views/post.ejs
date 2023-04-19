@@ -1,0 +1,86 @@
+<%- include('./parts/header.ejs') %>
+  <%- include('./parts/navbar.ejs') %>
+    <div class="post" style="min-height: 100vh;padding: 130px 0px 50px 0px;">
+      <div class="container">
+        <div class="card border-0">
+          <img class="mb-4 h-60" style="border-radius: 15px 15px 0px 0px;" src="<%= post.imagePost %>" alt="">
+          <div class="container">
+            <div class="row mb-4">
+              <div class="col-12 text-center mb-3">
+                <h3>
+                  <%= post.namePost %>
+                </h3>
+              </div>
+              <div class="col-12 mb-3 text-end">
+                <% if (isOwner) {%>
+                  <button style="background: none;border: 0px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    data-bs-whatever="@mdo"><i style="font-size: 20px;color: green;"
+                      class="fa-regular fa-pen-to-square"></i></button>
+                  <form method="POST" style="display: inline; margin-left: 10px;">
+                    <input type="hidden" name="postId" value="<%= post._id %>">
+                    <input type="hidden" name="url" value="/">
+                    <button style="background: none;border: 0px;" formaction="/post/delete" type="submit"><i
+                        style="font-size: 20px;color: #cf3636;" class="fa-regular fa-trash-can"></i></button>
+                  </form>
+                  <% } %>
+              </div>
+            </div>
+            <% function formatTimestamp(timestamp) { const now=Date.now(); const diff=now - timestamp; const minute=60 *
+              1000; const hour=60 * minute; const day=24 * hour; if (diff < minute) { return 'just now' ; } else if
+              (diff < hour) { const minutes=Math.floor(diff / minute); return `${minutes} minute${minutes===1 ? '' : 's'
+              } ago`; } else if (diff < day) { const hours=Math.floor(diff / hour); return `${hours} hour${hours===1
+              ? '' : 's' } ago`; } else { const days=Math.floor(diff / day); return `${days} day${days===1 ? '' : 's' }
+              ago`; } } %>
+              <h6 class="mb-4">author : <span style="color: #777;">
+                  <%= post.username %>
+                </span></h6>
+              <h6 class="mb-4" style="color: #777;">posted <%= formatTimestamp(post.date) %>
+              </h6>
+              <p>
+                <%= post.descriptionPost %>
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal -->
+    <div class="modal fade" style="padding-top: 150px;" id="exampleModal" tabindex="-1"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit post</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/post/edit" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="postId" value="<%= post._id %>">
+              <input type="hidden" name="url" value="/post/<%= post._id %>">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Title</label>
+                <input name="namePost" value="<%= post.namePost %>" type="text" class="form-control" id="recipient-name"
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="recipient-image" class="col-form-label">Image</label>
+                <input name="imagePost" value="<%= post.imagePost %>" type="file" class="form-control"
+                  id="recipient-image" required>
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Description</label>
+                <textarea minlength="15" name="descriptionPost" class="form-control" id="message-text"
+                  required><%= post.descriptionPost %></textarea>
+              </div>
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Edit post" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <%- include('./parts/footer.ejs') %>
+      </body>
+
+      </html>

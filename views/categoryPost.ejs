@@ -1,0 +1,45 @@
+<%- include('./parts/header.ejs') %>
+<%- include('./parts/navbar.ejs') %>
+<div class="category" style="min-height: 100vh;padding-top: 130px;">
+    <div class="container">
+        <h1 class="text-center mb-5"><%= titleName %> posts</h1>
+        <div class="row mt-5">
+            <% function formatTimestamp(timestamp) {
+                const now = Date.now();
+                const diff = now - timestamp;
+                const minute = 60 * 1000;
+                const hour = 60 * minute;
+                const day = 24 * hour;
+              
+                if (diff < minute) {
+                  return 'just now';
+                } else if (diff < hour) {
+                  const minutes = Math.floor(diff / minute);
+                  return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+                } else if (diff < day) {
+                  const hours = Math.floor(diff / hour);
+                  return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+                } else {
+                  const days = Math.floor(diff / day);
+                  return `${days} day${days === 1 ? '' : 's'} ago`;
+                }
+              } %>
+            <% posts.forEach(post => { %>
+                <div class="col-12 col-sm-6 col-md-3 mb-4">
+                    <div class="card w-100" style="border-radius: 0px;height: 100%;padding-bottom: 12px;">
+                      <img style="max-height: 136px;" src="<%= post.imagePost %>" class="mb-3" alt="...">
+                      <div class="card-dody" style="padding-left: 5px;">
+                        <h5 style="color: #000;margin-bottom: 15px;"><%= post.namePost %></h5>
+                        <a href="/portfolio/<%= post.userId %>" class="d-block mb-4" style="color: #777;"><img src="<%= post.image %>" style="border-radius: 200px;height: 52px;" alt=""><span><%= post.username %></span></a>
+                        <h6 class="mb-3">posted <%= formatTimestamp(post.date) %></h6>
+                        <a href="/post/<%= post._id %>" style="color: #000;font-weight: 700;">View the post</a>
+                      </div>
+                    </div>
+                  </div> 
+           <% }); %>
+        </div>
+    </div>
+</div>
+<%- include('./parts/footer.ejs') %>
+</body>
+</html>

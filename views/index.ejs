@@ -1,0 +1,111 @@
+<%- include('./parts/header.ejs') %>
+<%- include('./parts/navbar.ejs') %>
+<% if (LoggeSuccessfully) {%>
+  <div id="LoggeSuccessfully" class="alert alert-success py-3 " style="z-index: 99;border-radius: 0px;position: absolute;top: 70px;width: 100%;padding: 0px 50px;display: flex;align-items: center;justify-content: space-between;font-size: 18px;"><%= LoggeSuccessfully %><i style="cursor: pointer;" id="icon-wrong" class="fa-regular fa-circle-xmark fs-4"></i></div>
+<% } %>
+<script>
+
+   document.getElementById('LoggeSuccessfully').onclick = () => {
+     LoggeSuccessfully.style.display = 'none'
+   }
+</script>
+<div class="frontpage">
+    <div class="container">
+<!-- Swiper -->
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-4">
+                <img src="https://preview.colorlib.com/theme/magdesign/images/post_lg_2.jpg" class="img-fluid" alt="img">
+            </div>
+            <div class="col-12 col-md-8">
+                <h1 class="fw-bold" style="font-size: 45px;">Your most unhappy customers are your greatest source of learning.</h1>
+            </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-4">
+                <img src="https://preview.colorlib.com/theme/magdesign/images/post_lg_4.jpg.webp" class="img-fluid" alt="img">
+            </div>
+            <div class="col-12 col-md-8">
+                <h1 class="fw-bold" style="font-size: 45px;">Your most unhappy customers are your greatest source of learning.</h1>
+            </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-4">
+                <img src="https://preview.colorlib.com/theme/magdesign/images/post_lg_3.jpg.webp" class="img-fluid" alt="img">
+            </div>
+            <div class="col-12 col-md-8">
+                <h1 class="fw-bold" style="font-size: 45px;">Your most unhappy customers are your greatest source of learning.</h1>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+    </div>
+</div>
+<div class="trendingblogs py-4">
+  <div class="container">
+   <h1 class="text-center fw-bold mb-5">Posts</h1>   
+    <div class="row">
+      <% function formatTimestamp(timestamp) {
+        const now = Date.now();
+        const diff = now - timestamp;
+        const minute = 60 * 1000;
+        const hour = 60 * minute;
+        const day = 24 * hour;
+      
+        if (diff < minute) {
+          return 'just now';
+        } else if (diff < hour) {
+          const minutes = Math.floor(diff / minute);
+          return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+        } else if (diff < day) {
+          const hours = Math.floor(diff / hour);
+          return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+        } else {
+          const days = Math.floor(diff / day);
+          return `${days} day${days === 1 ? '' : 's'} ago`;
+        }
+      } %>
+      
+      <% posts.forEach(post => {%>
+        <div class="col-12 col-sm-6 col-md-3 mb-4">
+          <div class="card w-100" style="border-radius: 0px;height: 100%;padding-bottom: 12px;">
+            <img style="max-height: 136px;" src="<%= post.imagePost %>" class="mb-3" alt="...">
+            <div class="card-dody" style="padding-left: 5px;">
+              <h5 style="color: #000;margin-bottom: 15px;"><%= post.namePost %></h5>
+              <a href="/portfolio/<%= post.userId %>" class="d-block mb-4" style="color: #777;"><img src="<%= post.image %>" style="border-radius: 200px;height: 52px;width: 52px;margin-right: 7px;" alt=""><span><%= post.username %></span></a>
+              <h6 class="mb-3">posted <%= formatTimestamp(post.date) %></h6>
+              <a href="/post/<%= post._id %>" style="color: #000;font-weight: 700;">View the post</a>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  </script>
+<%- include('./parts/footer.ejs') %>
+</body>
+</html>
